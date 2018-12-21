@@ -1,3 +1,5 @@
-# /bin/bash
+#!/bin/bash
 
-matlab -r "mcc -d /Users/cdla/Repository/github/scnsnl_preproc_docker -I /Users/cdla/Repository/github/scnsnl_preproc_docker/toolboxes/scsnlScripts/brainImaging/mri/fmri/preprocessing/spm12/preprocessfmrimodules/scripts/ -I /Users/cdla/Repository/github/scnsnl_preproc_docker/toolboxes/scsnlScripts/brainImaging/mri/fmri/preprocessing/spm12/preprocessfmrimodules/batchtemplates/ -I /Users/cdla/Repository/github/scnsnl_preproc_docker/toolboxes/scsnlScripts/brainImaging/mri/fmri/preprocessing/spm12/utils -m /Users/cdla/Repository/github/scnsnl_preproc_docker/toolboxes/scsnlScripts/brainImaging/mri/fmri/preprocessing/spm12/preprocessfmri.m"
+base_dir="/Users/cdla/Repository/github/scsnl_preproc_docker"
+
+matlab -r "mcc -d ${base_dir}/compiled_scsnl_app/ -I ${base_dir}/toolboxes/scsnlScripts/brainImaging/mri/fmri/preprocessing/spm12/preprocessfmrimodules/scripts/ -I ${base_dir}/toolboxes/scsnlScripts/brainImaging/mri/fmri/preprocessing/spm12/preprocessfmrimodules/batchtemplates/ -I ${base_dir}/toolboxes/scsnlScripts/brainImaging/mri/fmri/preprocessing/spm12/utils -I ${base_dir}/toolboxes/ArtRepair/ -m ${base_dir}/toolboxes/scsnlScripts/brainImaging/mri/fmri/preprocessing/spm12/preprocessfmri.m"
