@@ -1,0 +1,3 @@
+[submodule "toolboxes/scsnlScripts"]
+	path = toolboxes/scsnlScripts
+	url = https://github.com/cdla/scsnlScripts

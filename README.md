@@ -71,9 +71,12 @@ Upon doing some preliminary research, it looks like there are some field tools t
 
 I. use official spm dockerfile
 
-II. create MCR version of preprocessing scripts and add to official spm docker
+II. translate existing pipeline to nipype and then dockerize nipype environment with something like neurodocker
 
-III. translate existing pipeline to nipype and then dockerize nipype environment with something like neurodocker
+III. create MCR version of preprocessing scripts and add to official spm docker
+
+IV. use neurodocker framework to create environment
+
 
 
 
@@ -83,11 +86,11 @@ route I.
 
 - the official spm docker works mainly off spm_batch formatted language.  I would need to figure out how to translate the wrapped command line functions such as [this](https://github.com/scsnl/scsnlScripts/blob/master/brainImaging/mri/fmri/preprocessing/spm12/utils/nifti4Dto3D.m#L20-L21), as well as how to translate the pipeline's use of fsl at certain points like when reorienting the data/"FlipZ", like [here](https://github.com/scsnl/scsnlScripts/blob/master/brainImaging/mri/fmri/preprocessing/spm12/preprocessfmrimodules/scripts/preprocessfmri_FlipZ.m#L2))
 
-route III
+route II
 
  - this route is the one that I would be most comfortable with, given my relative comfort with nipype as compared to nipype. I think that this route would take the longest.
 
-route II *I chose to go this route*
+route III *I chose to go this route*
 
 - this route I think will have the best translation / easiest for users to who are familiar with the existing pipeline to translate over to
 
@@ -95,8 +98,12 @@ route II *I chose to go this route*
   - spm12 standalone (mcr version) - [source](https://github.com/spm/spm-docker/blob/master/matlab/Dockerfile)
   - fsl 5.0.10 - [source](https://github.com/kaczmarj/neurodocker/blob/master/examples/fsl/Dockerfile) or something similar
   - scsnl preprocessing scripts - [source](https://github.com/scsnl/scsnlScripts/tree/master/brainImaging/mri/fmri/preprocessing/spm12)
+    - including ArtRepair toolbox [website](https://cibsr.stanford.edu/tools/human-brain-project/artrepair-software.html)
 
+- will need to modify existing scripts to use the spm12 mcr
 
+route IV
+- neurodocker seems like a very useful tool that I should familiarize myself with. I could see myself using this tool in the future.
 
 ### Plan
 
