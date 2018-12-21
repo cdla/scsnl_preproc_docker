@@ -1,4 +1,5 @@
 #!/bin/bash
+# To use this script, download the ARTRepair toolbox and place it within toolboxes. It is separate from this github due to ARTRepair's request to gather name and organization information of its users.
 
 base_dir="/Users/cdla/Repository/github/scsnl_preproc_docker"
 
