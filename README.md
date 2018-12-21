@@ -12,8 +12,7 @@ The goal is to begin dockerizing the available workflows located at the [SCSNL g
 
 ## Installation / Requirements
 
-- Docker installation
-
+- Docker installation ([docker docs](https://docs.docker.com/get-started/))
 
 ## Usage
 
@@ -41,9 +40,9 @@ cd scsnl_preproc_docker
 docker build -t scsnl/preproc_spm12 .
 ```
 
- 5. run the workflow, with the three arguments indicating the location of the config_file.m, the data_dir, and the output_dir
+ 5. *(not tested/functional, but this is how the docker workflow woudl be run)* run the workflow, with the three arguments indicating the location of the config_file.m, the data_dir, and the output_dir
 ```
-docker run -it scsnl/preproc_spm12 subject_index config_file.m
+docker run -t scsnl/preproc_spm12 -v /oak/project_location:/project_dir/ -v /oak/raw_data_location/:/raw_data/ -v /oak/output_dir/:/output_dir/ -v /oak/config_file_location.txt:/config.m subject_index
 ```
 
 ## Future Directions
@@ -107,16 +106,30 @@ route IV
 
 ### Plan
 
-- [x] make a dockerfile that supports SPM12 MCR and FSL ([commit](https://github.com/cdla/scsnl_preproc_docker/commit/5b2c7fd3880c0cd67a0ac48efacca706eb511b65))
+- [x] make a dockerfile that supports SPM12 MCR and FSL ([relevant commit](https://github.com/cdla/scsnl_preproc_docker/commit/5b2c7fd3880c0cd67a0ac48efacca706eb511b65))
 
-- [x] remove/update script locations to docker relevant places
-- [x] modify existing scripts to take data location/output location as arguments for command
+- [x] remove/update script locations to docker relevant places ([relevant commit](https://github.com/cdla/scsnlScripts/commit/6cffbf8c8d4e7c21784d6e09bf4fbe77ee1409c8))
+- [x] modify existing scripts to take data location/project location/ output location as arguments for command ([relevant commit](https://github.com/cdla/scsnlScripts/commit/977f1b577e7b9a3299e229c125b505f6ad0f4931))
+  - due to the nature of containers, these directories will have to be mounted as volumes within the container.
+- [x] within preproc functions and utils, remove filepaths (fsl commands and added toolboxes) ([relevant commit](https://github.com/cdla/scsnlScripts/commit/5149b937eec6786a4ca471b895543a13a4bc985a))
 - [x] modify existing scripts to change spm_run locations to unix matlab commands that invoke spm12-mcr compiled versions [standalone usage docs](https://en.wikibooks.org/wiki/SPM/Standalone)
-- [x] compile the SCSNL preprocessing scripts (including ARTRepair toolbox) into an executable using [mcc](https://www.mathworks.com/help/compiler/mcc.html) . [relevant script](https://github.com/cdla/scsnl_preproc_docker/blob/master/scsnl_compile.sh)
+  - example:
+  ```
+  spm_jobman('run', BatchFile);
+  ```
+  turns to
+  ```
+  system(sprintf('spm12 batch %s',BatchFile));
+  ```
+([relevant commit](https://github.com/cdla/scsnlScripts/commit/7c41bb20d0f7423c7c6d5a3893bfcf7b10a4139f))
+- [x] compile the SCSNL preprocessing scripts (including ARTRepair toolbox) into an executable using [mcc](https://www.mathworks.com/help/compiler/mcc.html) . ([relevant script](https://github.com/cdla/scsnl_preproc_docker/blob/master/scsnl_compile.sh))
 
-- [ ] test that spm functions, artrepair functions, and unix/fsl functions are running appropriately within the matlab compiled app.
+- [ ] test that spm functions, artrepair functions, and unix/fsl functions are running appropriately within the matlab compiled app on a sample dataset
+  - this will determine whether matlab runtime compiler and docker interaction requires workflow restructure to handle passing data to the container.
 
-- [ ] integrate scsnl standalone app into dockerfile
+
+
+- [ ] integrate scsnl standalone app into dockerfile (add volume mounts from modified scsnl preproc scripts)
 
 - [ ] test dockerfile
 
