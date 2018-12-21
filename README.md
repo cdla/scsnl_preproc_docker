@@ -32,13 +32,13 @@ git clone git@github.com:cdla/scnsnl_preproc_docker.git
  3. unzip the directory (if needed) and cd into the directory
 
 ```
-unzip scsnl_preproc_docker;
+unzip scsnl_preproc_docker.zip;
 cd scnsnl_preproc_docker
 ```  
 
  4. build the docker image
 ```
-docker build -f dockerfile -t scsnl/preproc_spm12
+docker build -t scsnl/preproc_spm12 .
 ```
 
  5. run the workflow, with the three arguments indicating the location of the config_file.m, the data_dir, and the output_dir
@@ -49,12 +49,13 @@ docker run -it scsnl/preproc_spm12 config_file.m data_dir output_dir
 ## Future Directions
 
 - use docker2singularity to create a singularity image so that the docker workflow can run in research computing clusters such as Sherlock.
+- generate the same environment using neurodocker
 
 
 
 
 
-## Background Info
+## Thought Process
 
 Upon doing some preliminary research, it looks like there are some field tools that have already done the lion's share of work in this process including:
 
@@ -92,16 +93,19 @@ route II *I chose to go this route*
 
 - For this route, the goal is to create a dockerfile that has:
   - spm12 standalone (mcr version) - [source](https://github.com/spm/spm-docker/blob/master/matlab/Dockerfile)
-  - fsl 5.0.10 - [source](https://github.com/kaczmarj/neurodocker/blob/master/examples/fsl/Dockerfile)
+  - fsl 5.0.10 - [source](https://github.com/kaczmarj/neurodocker/blob/master/examples/fsl/Dockerfile) or something similar
   - scsnl preprocessing scripts - [source](https://github.com/scsnl/scsnlScripts/tree/master/brainImaging/mri/fmri/preprocessing/spm12)
 
 
 
 ### Plan
 
-- [ ] make a dockerfile that supports SPM12 MCR and FSL
+- [x] make a dockerfile that supports SPM12 MCR and FSL ([commit](https://github.com/cdla/scnsnl_preproc_docker/commit/5b2c7fd3880c0cd67a0ac48efacca706eb511b65))
 
 - [ ] compile the SCSNL preprocessing scripts into an executable using [mcc](https://www.mathworks.com/help/compiler/mcc.html) .
+  - [ ] remove/update script locations to docker relevant places
+  - [ ] modify existing scripts to take data location/output location as arguments for command
+  - [ ] modify existing scripts to change spm_run locations to unix matlab commands that invoke spm12-mcr compiled versions [standalone usage docs](https://en.wikibooks.org/wiki/SPM/Standalone)
 
 - [ ] test that both spm functions and unix/fsl functions are running appropriately
 
