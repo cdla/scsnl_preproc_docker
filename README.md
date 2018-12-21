@@ -23,17 +23,17 @@ The goal is to begin dockerizing the available workflows located at the [SCSNL g
 docker info
 ```
 
-2. clone the latest github version, by either clicking [here](https://github.com/cdla/scnsnl_preproc_docker/archive/master.zip), or running
+2. clone the latest github version, by either clicking [here](https://github.com/cdla/scsnl_preproc_docker/archive/master.zip), or running
 
 ```
-git clone git@github.com:cdla/scnsnl_preproc_docker.git
+git clone git@github.com:cdla/scsnl_preproc_docker.git
 ```  
 
  3. unzip the directory (if needed) and cd into the directory
 
 ```
 unzip scsnl_preproc_docker.zip;
-cd scnsnl_preproc_docker
+cd scsnl_preproc_docker
 ```  
 
  4. build the docker image
@@ -98,7 +98,7 @@ route III *I chose to go this route*
   - spm12 standalone (mcr version) - [source](https://github.com/spm/spm-docker/blob/master/matlab/Dockerfile)
   - fsl 5.0.10 - [source](https://github.com/kaczmarj/neurodocker/blob/master/examples/fsl/Dockerfile) or something similar
   - scsnl preprocessing scripts - [source](https://github.com/scsnl/scsnlScripts/tree/master/brainImaging/mri/fmri/preprocessing/spm12)
-    - including ArtRepair toolbox [website](https://cibsr.stanford.edu/tools/human-brain-project/artrepair-software.html)
+    - include ArtRepair toolbox [website](https://cibsr.stanford.edu/tools/human-brain-project/artrepair-software.html)
 
 - will need to modify existing scripts to use the spm12 mcr
 
@@ -107,14 +107,14 @@ route IV
 
 ### Plan
 
-- [x] make a dockerfile that supports SPM12 MCR and FSL ([commit](https://github.com/cdla/scnsnl_preproc_docker/commit/5b2c7fd3880c0cd67a0ac48efacca706eb511b65))
+- [x] make a dockerfile that supports SPM12 MCR and FSL ([commit](https://github.com/cdla/scsnl_preproc_docker/commit/5b2c7fd3880c0cd67a0ac48efacca706eb511b65))
 
-- [ ] remove/update script locations to docker relevant places
-- [ ] modify existing scripts to take data location/output location as arguments for command
-- [ ] modify existing scripts to change spm_run locations to unix matlab commands that invoke spm12-mcr compiled versions [standalone usage docs](https://en.wikibooks.org/wiki/SPM/Standalone)
-- [ ] compile the SCSNL preprocessing scripts into an executable using [mcc](https://www.mathworks.com/help/compiler/mcc.html) .
+- [x] remove/update script locations to docker relevant places
+- [x] modify existing scripts to take data location/output location as arguments for command
+- [x] modify existing scripts to change spm_run locations to unix matlab commands that invoke spm12-mcr compiled versions [standalone usage docs](https://en.wikibooks.org/wiki/SPM/Standalone)
+- [x] compile the SCSNL preprocessing scripts (including ARTRepair toolbox) into an executable using [mcc](https://www.mathworks.com/help/compiler/mcc.html) . [relevant script](https://github.com/cdla/scsnl_preproc_docker/blob/master/scsnl_compile.sh)
 
-- [ ] test that both spm functions and unix/fsl functions are running appropriately
+- [ ] test that spm functions, artrepair functions, and unix/fsl functions are running appropriately within the matlab compiled app.
 
 - [ ] integrate scsnl standalone app into dockerfile
 
