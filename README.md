@@ -40,7 +40,7 @@ cd scsnl_preproc_docker
 docker build -t scsnl/preproc_spm12 .
 ```
 
- 5. *(not tested/functional, but this is how the docker workflow woudl be run)* run the workflow, with the three arguments indicating the location of the config_file.m, the data_dir, and the output_dir
+ 5. *(not tested/functional, but this is how the docker workflow would be run)* run the workflow, with the three arguments indicating the location of the config_file.m, the data_dir, and the output_dir
 ```
 docker run -t scsnl/preproc_spm12 -v /oak/project_location:/project_dir/ -v /oak/raw_data_location/:/raw_data/ -v /oak/output_dir/:/output_dir/ -v /oak/config_file_location.txt:/config.m subject_index
 ```
@@ -83,11 +83,11 @@ IV. use neurodocker framework to create environment
 
 route I.
 
-- the official spm docker works mainly off spm_batch formatted language.  I would need to figure out how to translate the wrapped command line functions such as [this](https://github.com/scsnl/scsnlScripts/blob/master/brainImaging/mri/fmri/preprocessing/spm12/utils/nifti4Dto3D.m#L20-L21), as well as how to translate the pipeline's use of fsl at certain points like when reorienting the data/"FlipZ", like [here](https://github.com/scsnl/scsnlScripts/blob/master/brainImaging/mri/fmri/preprocessing/spm12/preprocessfmrimodules/scripts/preprocessfmri_FlipZ.m#L2))
+- the official spm docker works mainly off spm_batch formatted language.  I would need to figure out how to translate the wrapped command line functions such as [this](https://github.com/scsnl/scsnlScripts/blob/master/brainImaging/mri/fmri/preprocessing/spm12/utils/nifti4Dto3D.m#L20-L21), as well as how to translate the pipeline's use of fsl to its spm analogues like when reorienting the data/"FlipZ", like [here](https://github.com/scsnl/scsnlScripts/blob/master/brainImaging/mri/fmri/preprocessing/spm12/preprocessfmrimodules/scripts/preprocessfmri_FlipZ.m#L2))
 
 route II
 
- - this route is the one that I would be most comfortable with, given my relative comfort with nipype as compared to nipype. I think that this route would take the longest.
+ - this route is the one that I would be most comfortable with, given my relative comfort with nipype as compared to other frameworks. I think that this route would take the longest.
 
 route III *I chose to go this route*
 
@@ -122,7 +122,7 @@ route IV
   system(sprintf('spm12 batch %s',BatchFile));
   ```
 ([relevant commit](https://github.com/cdla/scsnlScripts/commit/7c41bb20d0f7423c7c6d5a3893bfcf7b10a4139f))
-- [x] compile the SCSNL preprocessing scripts (including ARTRepair toolbox) into an executable using [mcc](https://www.mathworks.com/help/compiler/mcc.html) . ([relevant script](https://github.com/cdla/scsnl_preproc_docker/blob/master/scsnl_compile.sh))
+- [x] compile the SCSNL preprocessing scripts (including ARTRepair toolbox) into an executable using [mcc](https://www.mathworks.com/help/compiler/mcc.html) . ([relevant script](https://github.com/cdla/scsnl_preproc_docker/blob/master/scsnl_compile.sh))([relevant commit](https://github.com/cdla/scsnl_preproc_docker/commit/e764872206337e73a8e3ed88aad824b5f33cfff3))
 
 - [ ] test that spm functions, artrepair functions, and unix/fsl functions are running appropriately within the matlab compiled app on a sample dataset
   - this will determine whether matlab runtime compiler and docker interaction requires workflow restructure to handle passing data to the container.
@@ -134,3 +134,8 @@ route IV
 - [ ] test dockerfile
 
 - [ ] comparison against non-dockerized version of scripts to make sure no hidden bugs arise.
+
+Possible Issues:
+ - coreg function references OldNorm as templates for spm12 workflow, which I would need to get a copy of that nifti
+ - verify ARTRepair version (spm8 version referenced within workflow)
+ - if mcr mapping of filepaths does not work with sample dataset, restructure file path mappings to be done in dockerfile instead of within preprocessingfmri.m wrapper.
