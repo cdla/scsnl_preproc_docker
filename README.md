@@ -43,7 +43,7 @@ docker build -t scsnl/preproc_spm12 .
 
  5. run the workflow, with the three arguments indicating the location of the config_file.m, the data_dir, and the output_dir
 ```
-docker run -it scsnl/preproc_spm12 config_file.m data_dir output_dir
+docker run -it scsnl/preproc_spm12 subject_index config_file.m
 ```
 
 ## Future Directions
@@ -109,10 +109,10 @@ route IV
 
 - [x] make a dockerfile that supports SPM12 MCR and FSL ([commit](https://github.com/cdla/scnsnl_preproc_docker/commit/5b2c7fd3880c0cd67a0ac48efacca706eb511b65))
 
+- [ ] remove/update script locations to docker relevant places
+- [ ] modify existing scripts to take data location/output location as arguments for command
+- [ ] modify existing scripts to change spm_run locations to unix matlab commands that invoke spm12-mcr compiled versions [standalone usage docs](https://en.wikibooks.org/wiki/SPM/Standalone)
 - [ ] compile the SCSNL preprocessing scripts into an executable using [mcc](https://www.mathworks.com/help/compiler/mcc.html) .
-  - [ ] remove/update script locations to docker relevant places
-  - [ ] modify existing scripts to take data location/output location as arguments for command
-  - [ ] modify existing scripts to change spm_run locations to unix matlab commands that invoke spm12-mcr compiled versions [standalone usage docs](https://en.wikibooks.org/wiki/SPM/Standalone)
 
 - [ ] test that both spm functions and unix/fsl functions are running appropriately
 
