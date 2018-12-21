@@ -138,4 +138,5 @@ route IV
 Possible Issues:
  - coreg function references OldNorm as templates for spm12 workflow, which I would need to get a copy of that nifti
  - verify ARTRepair version (spm8 version referenced within workflow)
+ - slicetiming file being optional (how to work with dockerized file mappings)
  - if mcr mapping of filepaths does not work with sample dataset, restructure file path mappings to be done in dockerfile instead of within preprocessingfmri.m wrapper.
